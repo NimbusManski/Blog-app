@@ -34,20 +34,18 @@ export default function PostPage() {
 
       if (response.ok) {
         alert("post successfully deleted");
-        setRedirect(true)
-        return <Navigate to={'/'} />
-
+        setRedirect(true);
+        return <Navigate to={"/"} />;
       } else if (response.status === 403) {
         alert("An error occured. Try again later");
       }
     } catch (error) {
       console.error("Error deleting post:", error);
-    
     }
   };
 
   if (redirect) {
-    return <Navigate to={'/'} />
+    return <Navigate to={"/"} />;
   }
 
   return (

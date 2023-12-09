@@ -1,51 +1,41 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom'; 
-import Post from '../Post';
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import Post from "../Post";
 
 export default function UserAccountPage() {
-  const { userId } = useParams(); 
+  const { userId } = useParams();
   const [user, setUser] = useState(null);
   const [userPosts, setUserPosts] = useState([]);
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchData = async () => {
       try {
-        console.log(userId); 
-        const response = await fetch(`http://localhost:8080/user/${userId}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch user data');
+        const userResponse = await fetch(
+          `http://localhost:8080/user/${userId}`
+        );
+        if (!userResponse.ok) {
+          throw new Error("Failed to fetch user data");
         }
-        const userData = await response.json();
+        const userData = await userResponse.json();
         setUser(userData);
+
+        const postsResponse = await fetch(
+          `http://localhost:8080/user/${userId}/posts`
+        );
+        if (!postsResponse.ok) {
+          throw new Error("Failed to fetch user posts");
+        }
+        const postsData = await postsResponse.json();
+        setUserPosts(postsData);
       } catch (error) {
-        console.error('Error fetching user data:', error);
-        
-        
+        console.error("Error fetching data:", error);
       }
     };
 
-    fetchUserData(); 
-
-       
-       const fetchUserPosts = async () => {
-        try {
-          const response = await fetch(`http://localhost:8080/user/${userId}/posts`);
-          if (!response.ok) {
-            throw new Error('Failed to fetch user posts');
-          }
-          const postsData = await response.json();
-          setUserPosts(postsData);
-        } catch (error) {
-          console.error('Error fetching user posts:', error);
-          
-        }
-      };
-  
-      fetchUserPosts(); 
-
+    fetchData();
   }, [userId]);
 
-   return (
+  return (
     <div>
       {user ? (
         <div>
@@ -55,7 +45,7 @@ export default function UserAccountPage() {
         <p>Loading...</p>
       )}
 
-      <h2>{user.username}'s Posts</h2>
+      <h2>{user && user.username}'s Posts</h2>
       {userPosts.map((post) => (
         <Post key={post._id} {...post} />
       ))}
