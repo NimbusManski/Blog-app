@@ -28,3 +28,13 @@ NOTE: you can test the cookie deleting functionality by sigining in and then ref
       -> you will see the cookie get deleted and then be redirected to the login page 
 
 NOTE: currently the expiration is 10 seconds for testing purposes so don't forget to change that to like '24h' or something like that 
+
+
+
+=========================================================================================================================================================
+
+CLIENT:
+
+1. added code to expire token on logout as well 
+2. added a catch all path to routes in app - makes it so that if user tries to navigate to a non existent endpoint, they will instead be navigated to the home page 
+   where they will be reauthenticated via the use effect in the Header component just as they are when first navigating to the site or after refreshing the page 

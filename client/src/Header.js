@@ -1,7 +1,7 @@
 import { Link, useNavigate,  } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from './UserContext';
-import { getToken } from './functions/utilFunctions';
+import { authenticate, getToken } from './functions/utilFunctions';
 import Menu from './Menu';
 
 export default function Header() {
@@ -10,6 +10,7 @@ export default function Header() {
   const navigate = useNavigate();
 
   useEffect(() => {
+
     let token = getToken(document);
 
     if(!token){
@@ -26,8 +27,36 @@ export default function Header() {
       }
       response.json().then((userInfo) => {
         setUserInfo(userInfo);
+
+        // NOTE: the below navigate handles the situation where a user tries to navigate to an undefined endpoint 
+        // -> in this case the Layout component is rendered due to the catch all route in App which causes this useEffect to fire
+        // -> this useEffect then tries to authenticate the user and if successful, navigates them to the home page, otherwise user gets 
+        //    navigated to the sign in page 
+        
+        // COMBINATIONS AND RESULTS:
+        // -> if user is logged in and then changes the url to localhost:3000/faosdifoeiwf for example, user will be re-authenticated using jwt and redirected to home page
+        // -> if user is already authenticated (has a valid non-expired token) but does not have app open in browser, then if user searches localhost:3000/faosdifoeiwf, user 
+        //    will be authenticated using jwt and redirected to home page
+        // -> if user is signed out (no valid token) and tries to bypass the login page by searching localhost:3000/faosdifoeiwf, or even a valid route like http://localhost:3000/account, 
+        //    user will be sent back to the login page 
+
+        navigate('/');
       });
     });
+
+    // ALTERNATE SYNTAX MAKIGN USE OF EXTERNAL FUNCTION FILE: 
+    // (async () => {
+
+    //   const [authenticated, userInfo] = await authenticate();
+
+    //   if(!authenticated){
+    //     navigate('login');
+    //     return 
+    //   }
+
+    //   setUserInfo(userInfo);
+    //   navigate('/')
+    // })()
 
   }, []);
 

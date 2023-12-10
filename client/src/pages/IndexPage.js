@@ -6,13 +6,16 @@ export default function IndexPage() {
   const { userInfo } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
   useEffect(() => {
+    if(!userInfo){
+      return 
+    }
     fetch('http://localhost:8080/post').then(response => {
       response.json().then(posts => {
         setPosts(posts);
 
       })
     })
-  }, [])
+  }, [userInfo])
 
   // console.log(userInfo.id);
 
