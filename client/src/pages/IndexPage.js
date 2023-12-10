@@ -5,21 +5,21 @@ import { UserContext } from "../UserContext";
 export default function IndexPage() {
   const { userInfo } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
-useEffect(() => {
-fetch('http://localhost:8080/post').then(response => {
-  response.json().then(posts => {
-    setPosts(posts);
-  
-  })
-})
-}, [])
+  useEffect(() => {
+    fetch('http://localhost:8080/post').then(response => {
+      response.json().then(posts => {
+        setPosts(posts);
 
-console.log(userInfo.id);
+      })
+    })
+  }, [])
+
+  // console.log(userInfo.id);
 
   return (
     <>
       {posts.length > 0 && posts.map(post => (
-        <Post key={post._id} {...post} 
+        <Post key={post._id} {...post}
           currentUserId={userInfo.id}
         />
       ))}

@@ -15,22 +15,20 @@ import UserAccountPage from './pages/UserAccountPage';
 
 function App() {
   return (
-<UserContextProvider>
-   <Routes>
-    <Route path={'/'} element={<Layout />}>
-      <Route index element={<IndexPage /> } />
-      <Route path={'/login'} element={<LoginPage />} />
-      <Route path={'/register'} element={<RegisterPage />} />
-      <Route path={'/create'} element={<CreatePostPage />} />
-      <Route path={'/post/:id'} element={<PostPage />} />
-      <Route path={'/edit/:id'} element={<EditPostPage />} />
-      <Route path={'/account'} element={<AccountPage />} />
-      <Route path={'/user/:userId'} element={<UserAccountPage />} />
-    </Route>
-   </Routes>
-</UserContextProvider>
-
-   
+    <UserContextProvider>
+      <Routes>
+        <Route path={'/'} element={<Layout />}>
+          <Route index element={<IndexPage />} />
+          <Route path={'/login'} element={<LoginPage />} />
+          <Route path={'/register'} element={<RegisterPage />} />
+          <Route path={'/create'} element={<CreatePostPage />} />
+          <Route path={'/post/:id'} element={<PostPage />} />
+          <Route path={'/edit/:id'} element={<EditPostPage />} />
+          <Route path={'/account'} element={<AccountPage />} />
+          <Route path={'/user/:userId'} element={<UserAccountPage />} />
+        </Route>
+      </Routes>
+    </UserContextProvider>
   );
 }
 
