@@ -54,7 +54,7 @@ app.post("/login", async (req, res) => {
       jwt.sign(
         { username, id: userDoc._id },
         secret,
-        { expiresIn: 900 },
+        {expiresIn: '10s'},
         (err, token) => {
           if (err) throw err;
           res.cookie("token", token).json({
@@ -83,7 +83,10 @@ app.get("/profile", (req, res) => {
       res.json(info);
     });
   } catch (e) {
-    console.log(e);
+    if(e.message == 'jwt expired'){
+      res.status(401).json({ message: 'jwt expired' });
+      return
+    }
     res.status(500).json({ message: "Internal server error" });
   }
 });
