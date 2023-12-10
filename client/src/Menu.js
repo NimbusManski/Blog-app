@@ -23,9 +23,8 @@ export default function Menu({isOpen}) {
       method: 'POST',
     });
     setUserInfo(null);
-
+    document.cookie = `token=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
     navigate('login');
-    
   }
 
   const username = userInfo?.username;

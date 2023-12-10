@@ -1,0 +1,40 @@
+SERVER:
+
+1. in index.js modified the expiresIn part to be a string with a time unit - might have been the source of your issues
+2. in the /profile endpoint added code to check for an expired token 
+  -> if token is expired return a 401 status (401 means unathorized) and an error message stating that jwt is expired 
+
+CLIENT:
+
+2. Created a 'functions' folder with a utilFunctions.js file inside
+  2.a not really needed for this project but is good practice for when you have a large project 
+  2.b idea is that your app will be divided into pages, components and functions 
+  2.c pages contain components, components have handler methods, and the handler methods call the functions defined in their respective function file
+  -> this pattern reinforces the fact that react is a library for building UI's by separating the presentational aspect of your app from the functional aspect of your app, 
+     and results in an app that's easier to read and debug
+  -> the above is just a side note, those separate function files aren't really needed in this case (IMO) since the app is not too large but just something to keep in mind for future projects
+
+3. Noticed that after logging out, was getting server error message saying 'must provide jwt' 
+  -> discovered that this was because Header.js was trying to send either a non-existent or invalid jwt (as a result of the logout) to the server 
+  -> solution was to first check to see if a token is present in cookies (by making use of the getToken helper function) and if not present, redirect user to login 
+
+4. In Header.js added code to handle case where jwt that was sent is expired 
+  -> in this case the server will have responded with a 401 status 
+  -> when status is 401 i updated the token to not be equal to anything and added the standard past date (01 Jan 1970 00:00:00 UTC) to 
+     cause the token cookie to expire and get deleted automatically and finally to navigate the user back to the login page 
+
+
+NOTE: you can test the cookie deleting functionality by sigining in and then refreshing after 10 seconds  
+      -> you will see the cookie get deleted and then be redirected to the login page 
+
+NOTE: currently the expiration is 10 seconds for testing purposes so don't forget to change that to like '24h' or something like that 
+
+
+
+=========================================================================================================================================================
+
+CLIENT:
+
+1. added code to expire token on logout as well 
+2. added a catch all path to routes in app - makes it so that if user tries to navigate to a non existent endpoint, they will instead be navigated to the home page 
+   where they will be reauthenticated via the use effect in the Header component just as they are when first navigating to the site or after refreshing the page 
