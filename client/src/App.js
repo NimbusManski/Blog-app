@@ -26,6 +26,7 @@ function App() {
       <Route path={'/edit/:id'} element={<EditPostPage />} />
       <Route path={'/account'} element={<AccountPage />} />
       <Route path={'/user/:userId'} element={<UserAccountPage />} />
+      <Route path="*" element={<Layout />} />
     </Route>
    </Routes>
 </UserContextProvider>

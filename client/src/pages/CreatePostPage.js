@@ -29,13 +29,16 @@ export default function CreatePost() {
   const [content, setContent] = useState("");
   const [files, setFiles] = useState("");
   const [redirect, setRedirect] = useState(false);
+
   async function createNewPost(e) {
     e.preventDefault();
+
     const data = new FormData();
     data.set("title", title);
     data.set("summary", summary);
     data.set("content", content);
     data.set("file", files[0]);
+
     const response = await fetch("http://localhost:8080/post", {
       method: "POST",
       body: data,

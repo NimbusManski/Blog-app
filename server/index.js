@@ -11,7 +11,6 @@ const cookieParser = require("cookie-parser");
 const multer = require("multer");
 const uploadMiddleware = multer({ dest: "uploads/" });
 const fs = require("fs");
-const { log } = require("console");
 
 const salt = bcrypt.genSaltSync(10);
 const secret = process.env.SECRET;
@@ -54,7 +53,7 @@ app.post("/login", async (req, res) => {
       jwt.sign(
         { username, id: userDoc._id },
         secret,
-        { expiresIn: 900 },
+        { expiresIn: '1hr' },
         (err, token) => {
           if (err) throw err;
           res.cookie("token", token).json({
@@ -169,7 +168,7 @@ app.get("/post", async (req, res) => {
       await Post.find()
         .populate("author", ["username"])
         .sort({ createdAt: -1 })
-        .limit(20)
+        .limit(30)
     );
   } catch (e) {
     console.log(e);
