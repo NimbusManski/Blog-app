@@ -244,6 +244,6 @@ app.delete("/post/:id", async (req, res) => {
   }
 });
 
-app.listen(8080);
+app.listen(process.env.PORT);
 
 //     mongodb+srv://daniel:PASSWORD@cluster0.ccyotjk.mongodb.net/
