@@ -15,7 +15,7 @@ export default function Menu({isOpen}) {
         setUserInfo(userInfo);
       });
     });
-  }, []);
+  }, [setUserInfo]);
 
   function logout() {
     fetch('http://localhost:8080/logout', {
