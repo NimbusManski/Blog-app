@@ -54,7 +54,7 @@ app.post("/login", async (req, res) => {
       jwt.sign(
         { username, id: userDoc._id },
         secret,
-        { expiresIn: 900 },
+        { expiresIn: '1H' },
         (err, token) => {
           if (err) throw err;
           res.cookie("token", token).json({
@@ -78,9 +78,16 @@ app.get("/profile", (req, res) => {
 
     jwt.verify(token, secret, {}, (err, info) => {
       if (err) {
-        throw err;
+        if (err.name === "TokenExpiredError") {
+          res.status(401).json({ message: "Token has expired" });
+        } else if (err.name === "JsonWebTokenError") {
+          res.status(401).json({ message: "Invalid token" });
+        } else {
+          res.status(500).json({ message: "Internal server error" });
+        }
+      } else {
+        res.json(info);
       }
-      res.json(info);
     });
   } catch (e) {
     console.log(e);

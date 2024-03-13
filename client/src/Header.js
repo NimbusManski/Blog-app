@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {useState, useEffect, useContext } from 'react';
 import { UserContext } from './UserContext';
 import Menu from './Menu';
@@ -6,16 +6,21 @@ import Menu from './Menu';
 export default function Header() {
   const [toggleMenu, setToggleMenu] = useState(false);
   const { setUserInfo, userInfo } = useContext(UserContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch('http://localhost:8080/profile', {
       credentials: 'include',
     }).then((response) => {
+      if (response.status === 401) {
+        alert("Session has expired");
+          navigate("/login");
+      }
       response.json().then((userInfo) => {
         setUserInfo(userInfo);
       });
     });
-  }, []);
+  }, [setUserInfo]);
 
   const username = userInfo?.username;
 
