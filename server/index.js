@@ -24,6 +24,10 @@ mongoose.connect(
   `mongodb+srv://${process.env.USER}:${process.env.DB_PASSWORD}@cluster0.ccyotjk.mongodb.net/`
 );
 
+app.get('/', (req, res) => {
+  res.json('Backend Running');
+})
+
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
   try {
