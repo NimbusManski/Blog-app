@@ -7,7 +7,7 @@ const [password, setPassword] = useState('');
 const [redirect, setRedirect] = useState(false);
 async function register(e) {
   e.preventDefault();
-  const response = await fetch('http://localhost:8080/register', {
+  const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/register`, {
     method: 'POST',
     body: JSON.stringify({username, password}),
     headers: {'Content-Type':'application/json'},

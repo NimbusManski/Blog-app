@@ -6,7 +6,7 @@ export default function IndexPage() {
   const { userInfo } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
 useEffect(() => {
-fetch('http://localhost:8080/post').then(response => {
+fetch(`${process.env.REACT_APP_SERVER_URL}/post`).then(response => {
   response.json().then(posts => {
     setPosts(posts);
   

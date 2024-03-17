@@ -11,7 +11,6 @@ const cookieParser = require("cookie-parser");
 const multer = require("multer");
 const uploadMiddleware = multer({ dest: "uploads/" });
 const fs = require("fs");
-const { log } = require("console");
 
 const salt = bcrypt.genSaltSync(10);
 const secret = process.env.SECRET;
@@ -252,6 +251,8 @@ app.delete("/post/:id", async (req, res) => {
   }
 });
 
-app.listen(8080);
+app.listen(process.env.PORT, (req, res) =>{
+  console.log("Backend Running");
+});
 
-//     mongodb+srv://daniel:PASSWORD@cluster0.ccyotjk.mongodb.net/
+

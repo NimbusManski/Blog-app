@@ -15,7 +15,7 @@ export default function Post({
     <div className="post">
       <div className="image">
         <Link to={`/post/${_id}`}>
-          <img src={'http://localhost:8080/' + cover} alt='post cover' />
+          <img src={`${process.env.REACT_APP_SERVER_URL}/` + cover} alt='post cover' />
         </Link>
       </div>
       <div className="texts">

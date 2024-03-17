@@ -10,7 +10,7 @@ export default function LoginPage() {
 
   async function login(e) {
     e.preventDefault();
-  try { const response = await fetch('http://localhost:8080/login', {
+  try { const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/login`, {
       method: 'POST',
       body: JSON.stringify({username, password}),
       headers: {'Content-Type': 'application/json'},

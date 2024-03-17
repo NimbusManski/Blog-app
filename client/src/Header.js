@@ -10,7 +10,7 @@ export default function Header() {
 
   useEffect(() => {
     try {
-      fetch("http://localhost:8080/profile", {
+      fetch(`${process.env.REACT_APP_SERVER_URL}/profile`, {
         credentials: "include",
       }).then((response) => {
         response.json().then((userInfo) => {

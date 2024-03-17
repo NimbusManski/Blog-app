@@ -8,7 +8,7 @@ export default function Menu({isOpen}) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:8080/profile', {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/profile`, {
       credentials: 'include',
     }).then((response) => {
       response.json().then((userInfo) => {
@@ -18,7 +18,7 @@ export default function Menu({isOpen}) {
   }, [setUserInfo]);
 
   function logout() {
-    fetch('http://localhost:8080/logout', {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/logout`, {
       credentials: 'include',
       method: 'POST',
     });

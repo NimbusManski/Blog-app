@@ -12,7 +12,7 @@ export default function PostPage() {
 
   useEffect(() => {
     console.log(id);
-    fetch(`http://localhost:8080/post/${id}`).then((response) => {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/post/${id}`).then((response) => {
       response.json().then((postInfo) => {
         setPostInfo(postInfo);
       });
@@ -26,7 +26,7 @@ export default function PostPage() {
   const deletePostHandler = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8080/post/${postInfo._id}`,
+        `${process.env.REACT_APP_SERVER_URL}/post/${postInfo._id}`,
         {
           method: "DELETE",
         }
@@ -97,7 +97,7 @@ export default function PostPage() {
         </div>
       )}
       <div className="image">
-        <img src={`http://localhost:8080/${postInfo.cover}`} alt="" />
+        <img src={`${process.env.REACT_APP_SERVER_URL}/${postInfo.cover}`} alt="" />
       </div>
       <div
         className="content"

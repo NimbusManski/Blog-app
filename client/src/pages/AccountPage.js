@@ -13,7 +13,7 @@ export default function AccountPage() {
           return;
         }
         const response = await fetch(
-          `http://localhost:8080/user/${userInfo.id}/posts`
+          `${process.env.REACT_APP_SERVER_URL}/${userInfo.id}/posts`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch user posts");

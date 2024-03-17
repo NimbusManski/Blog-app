@@ -11,7 +11,7 @@ export default function UserAccountPage() {
     const fetchData = async () => {
       try {
         const userResponse = await fetch(
-          `http://localhost:8080/user/${userId}`
+          `${process.env.REACT_APP_SERVER_URL}/user/${userId}`
         );
         if (!userResponse.ok) {
           throw new Error("Failed to fetch user data");
@@ -20,7 +20,7 @@ export default function UserAccountPage() {
         setUser(userData);
 
         const postsResponse = await fetch(
-          `http://localhost:8080/user/${userId}/posts`
+          `${process.env.REACT_APP_SERVER_URL}/user/${userId}/posts`
         );
         if (!postsResponse.ok) {
           throw new Error("Failed to fetch user posts");
