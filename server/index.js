@@ -15,7 +15,9 @@ const fs = require("fs");
 const salt = bcrypt.genSaltSync(10);
 const secret = process.env.SECRET;
 
-app.use(cors({ credentials: true, origin: "https://blog-app-mo57.onrender.com" }));
+app.use(cors({ credentials: true, origin: "https://blog-app-mo57.onrender.com",
+methods: ['GET', 'POST', 'PUT', 'DELETE'],
+allowedHeaders: ['Content-Type', 'Authorization', 'token'], },));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
