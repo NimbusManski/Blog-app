@@ -17,7 +17,7 @@ const secret = process.env.SECRET;
 
 app.use(cors({ credentials: true, origin: "https://blog-app-mo57.onrender.com",
 methods: ['GET', 'POST', 'PUT', 'DELETE'],
-allowedHeaders: ['Content-Type', 'Authorization', 'token'], },));
+allowedHeaders: ['Content-Type', 'Authorization', 'token']}));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
@@ -62,7 +62,10 @@ app.post("/login", async (req, res) => {
         { expiresIn: '1H' },
         (err, token) => {
           if (err) throw err;
-          res.cookie("token", token).json({
+          res.cookie("token", token,{ 
+            secure: true, 
+            sameSite: 'none' 
+          }).json({
             id: userDoc._id,
             username,
           });
