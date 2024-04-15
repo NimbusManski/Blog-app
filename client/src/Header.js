@@ -26,7 +26,7 @@ export default function Header() {
         navigate("/login");
       }
     }
-  }, [setUserInfo, navigate]);
+  }, []);
 
   useEffect (()=> {
      if(Object.keys(userInfo).length === 0) {
