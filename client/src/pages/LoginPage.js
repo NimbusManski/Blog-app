@@ -23,8 +23,7 @@ export default function LoginPage() {
         setRedirect(true);
       })
 
-      console.log(userInfo);
-      
+
     }else if(response.status === 400) {
         window.location.reload();
       alert('Invalid login credentials');
