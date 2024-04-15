@@ -23,6 +23,7 @@ export default function LoginPage() {
         setRedirect(true);
       })
 
+      console.log(userInfo);
       
     }else if(response.status === 400) {
         window.location.reload();
@@ -33,7 +34,7 @@ export default function LoginPage() {
     }
   }
 
-  console.log(userInfo);
+  
 
   if (redirect) {
    return(
