@@ -30,6 +30,11 @@ export default function Header() {
 
   const username = userInfo?.username;
 
+
+  if (!username) {
+    navigate('/login');
+  }
+
   function toggleMenuHandler() {
     setToggleMenu(!toggleMenu);
   }
