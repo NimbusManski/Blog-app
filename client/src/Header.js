@@ -29,10 +29,10 @@ export default function Header() {
   }, [setUserInfo, navigate]);
 
   useEffect (()=> {
-     if(Object.keys(userInfo)) {
+     if(Object.keys(userInfo).length === 0) {
       navigate('login')
      }
-  }, [])
+  }, [userInfo]);
 
   const username = userInfo?.username;
 
