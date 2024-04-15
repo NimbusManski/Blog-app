@@ -26,13 +26,7 @@ export default function Header() {
         navigate("/login");
       }
     }
-  }, []);
-
-  useEffect (()=> {
-     if(Object.keys(userInfo).length === 0) {
-      navigate('login')
-     }
-  }, []);
+  }, [setUserInfo, navigate]);
 
   const username = userInfo?.username;
 

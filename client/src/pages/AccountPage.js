@@ -17,6 +17,7 @@ export default function AccountPage() {
         );
         if (!response.ok) {
           throw new Error("Failed to fetch user posts");
+          
         }
         const postsData = await response.json();
         setUserPosts(postsData);
