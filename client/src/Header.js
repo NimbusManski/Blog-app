@@ -32,7 +32,7 @@ export default function Header() {
      if(Object.keys(userInfo).length === 0) {
       navigate('login')
      }
-  }, [userInfo]);
+  }, []);
 
   const username = userInfo?.username;
 

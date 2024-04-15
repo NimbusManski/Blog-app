@@ -33,6 +33,8 @@ export default function LoginPage() {
     }
   }
 
+  console.log(userInfo);
+
   if (redirect) {
    return(
     <Navigate to={'/'} />

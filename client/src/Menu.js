@@ -22,7 +22,7 @@ export default function Menu({isOpen}) {
       credentials: 'include',
       method: 'POST',
     });
-    setUserInfo({});
+    setUserInfo();
 
     navigate('login');
     
