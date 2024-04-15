@@ -14,6 +14,7 @@ const fs = require("fs");
 
 const salt = bcrypt.genSaltSync(10);
 const secret = process.env.SECRET;
+const blackList = [];
 
 app.use(cors({ credentials: true, origin: "https://blog-app-mo57.onrender.com",
 methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -59,7 +60,7 @@ app.post("/login", async (req, res) => {
       jwt.sign(
         { username, id: userDoc._id },
         secret,
-        { expiresIn: '1H' },
+        { expiresIn: 600 },
         (err, token) => {
           if (err) throw err;
           res.cookie("token", token,{ 
@@ -84,6 +85,10 @@ app.get("/profile", (req, res) => {
   try {
     const { token } = req.cookies;
 
+    if(blackList.includes(token)) {
+      return res.status(401).json({message: "Token blacklisted"})
+    }
+
     jwt.verify(token, secret, {}, (err, info) => {
       if (err) {
         if (err.name === "TokenExpiredError") {
@@ -104,7 +109,17 @@ app.get("/profile", (req, res) => {
 });
 
 app.post("/logout", (req, res) => {
-  res.cookie("token", "").json("cookie deleted");
+  try {
+const { token } = req.cookies;
+
+    if(token && !blackList.includes(token)) {
+      blackList.push(token);
+    }
+    res.clearCookie("token").json("cookie deleted");
+  } catch (e) {
+    console.error(err);
+  }
+  
 });
 
 app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
