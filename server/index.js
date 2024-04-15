@@ -16,9 +16,14 @@ const salt = bcrypt.genSaltSync(10);
 const secret = process.env.SECRET;
 const blackList = [];
 
-app.use(cors({ credentials: true, origin: "https://blog-app-mo57.onrender.com",
-methods: ['GET', 'POST', 'PUT', 'DELETE'],
-allowedHeaders: ['Content-Type', 'Authorization', 'token']}));
+app.use(
+  cors({
+    credentials: true,
+    origin: "https://blog-app-mo57.onrender.com",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization", "token"],
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
@@ -27,9 +32,9 @@ mongoose.connect(
   `mongodb+srv://${process.env.USER}:${process.env.DB_PASSWORD}@cluster0.ccyotjk.mongodb.net/`
 );
 
-app.get('/', (req, res) => {
-  res.json('Backend Running');
-})
+app.get("/", (req, res) => {
+  res.json("Backend Running");
+});
 
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
@@ -63,13 +68,15 @@ app.post("/login", async (req, res) => {
         { expiresIn: 600 },
         (err, token) => {
           if (err) throw err;
-          res.cookie("token", token,{ 
-            secure: true, 
-            sameSite: 'none' 
-          }).json({
-            id: userDoc._id,
-            username,
-          });
+          res
+            .cookie("token", token, {
+              secure: true,
+              sameSite: "none",
+            })
+            .json({
+              id: userDoc._id,
+              username,
+            });
         }
       );
     } else {
@@ -85,8 +92,8 @@ app.get("/profile", (req, res) => {
   try {
     const { token } = req.cookies;
 
-    if(blackList.includes(token)) {
-      return res.status(401).json({message: "Token blacklisted"})
+    if (blackList.includes(token)) {
+      return res.status(401).json({ message: "Token blacklisted" });
     }
 
     jwt.verify(token, secret, {}, (err, info) => {
@@ -106,20 +113,6 @@ app.get("/profile", (req, res) => {
     console.log(e);
     res.status(500).json({ message: "Internal server error" });
   }
-});
-
-app.post("/logout", (req, res) => {
-  try {
-const { token } = req.cookies;
-
-    if(token && !blackList.includes(token)) {
-      blackList.push(token);
-    }
-    res.clearCookie("token").json("cookie deleted");
-  } catch (e) {
-    console.error(err);
-  }
-  
 });
 
 app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
@@ -275,8 +268,19 @@ app.delete("/post/:id", async (req, res) => {
   }
 });
 
-app.listen(process.env.PORT, (req, res) =>{
-  console.log("Backend Running");
+app.post("/logout", (req, res) => {
+  try {
+    const { token } = req.cookies;
+
+    if (token && !blackList.includes(token)) {
+      blackList.push(token);
+    }
+    res.clearCookie("token").json("cookie deleted");
+  } catch (e) {
+    console.error(err);
+  }
 });
 
-
+app.listen(process.env.PORT, (req, res) => {
+  console.log("Backend Running");
+});

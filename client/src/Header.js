@@ -15,6 +15,9 @@ export default function Header() {
       }).then((response) => {
         response.json().then((userInfo) => {
           setUserInfo(userInfo);
+          if (response.status === 401) {
+            navigate("/login");
+          }
         });
       });
     } catch (err) {
