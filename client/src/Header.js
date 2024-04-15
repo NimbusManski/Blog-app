@@ -15,9 +15,9 @@ export default function Header() {
       }).then((response) => {
         response.json().then((userInfo) => {
           setUserInfo(userInfo);
-          // if (response.status === 401) {
-          //   navigate("/login");
-          // }
+          if (response.status === 401) {
+            navigate("/login");
+          }
         });
       });
     } catch (err) {
@@ -27,6 +27,12 @@ export default function Header() {
       }
     }
   }, [setUserInfo, navigate]);
+
+  useEffect (()=> {
+     if(Object.keys(userInfo)) {
+      navigate('login')
+     }
+  }, [])
 
   const username = userInfo?.username;
 
