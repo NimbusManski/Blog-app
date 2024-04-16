@@ -16,6 +16,7 @@ img {
 }
 
 a {
+  color: #aaa;
   cursor: pointer;
 }
 
@@ -152,7 +153,7 @@ div.post-page div.image img {
 }
 
 div.post-page a {
-  color: #333;
+  color: #fff;
   text-decoration: underline;
 }
 
