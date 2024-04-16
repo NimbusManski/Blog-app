@@ -37,7 +37,7 @@ export default function AccountPage() {
       <div>
         <h1>{userInfo.username}</h1>
         <h2>My posts</h2>
-        <h5>No posts yet! <Link to={"/create"}>Add a post</Link></h5>
+        <p>No posts yet! <Link to={"/create"}>Add a post</Link></p>
       </div>
   )
   }
