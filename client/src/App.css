@@ -16,7 +16,6 @@ img {
 }
 
 a {
-  color: #fff;
   cursor: pointer;
   text-decoration: none;
 }
@@ -90,6 +89,11 @@ div.post div.texts h2 {
 div.post div.texts a {
   text-decoration: none;
   color: inherit;
+}
+
+div.post div.texts a:hover {
+  text-decoration: underline;
+  color: #aaa;
 }
 
 div.post p.info {
