@@ -35,6 +35,10 @@ export default function UserAccountPage() {
     fetchData();
   }, [userId]);
 
+  if (user && userPosts.length === 0) {
+    return <div>{user.username} has not made any posts</div>;
+  }
+
   return (
     <div>
       {user ? (
