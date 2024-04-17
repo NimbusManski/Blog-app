@@ -218,6 +218,19 @@ app.get("/user/:userId/posts", async (req, res) => {
   }
 });
 
+app.get("/user/:userId/posts", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    console.log(userId);
+
+    const userPosts = await Post.find({ author: userId });
+
+    res.json(userPosts);
+  } catch (e) {
+    console.log("Error fetching user posts:", e);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 app.get("/user/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
@@ -239,19 +252,7 @@ app.get("/user/:userId", async (req, res) => {
   }
 });
 
-app.get("/user/:userId/posts", async (req, res) => {
-  try {
-    const { userId } = req.params;
-    console.log(userId);
 
-    const userPosts = await Post.find({ author: userId });
-
-    res.json(userPosts);
-  } catch (e) {
-    console.log("Error fetching user posts:", e);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
 
 app.delete("/post/:id", async (req, res) => {
   const postId = req.params.id;

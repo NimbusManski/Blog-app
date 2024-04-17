@@ -14,21 +14,21 @@ export default function AccountPage() {
           return;
         }
         const response = await fetch(
-          `${process.env.REACT_APP_SERVER_URL}/${userInfo.id}/posts`
-        );  console.log("Fetching user posts from:", response);
+          `${process.env.REACT_APP_SERVER_URL}/user/${userInfo.id}/posts`
+        );
+        console.log("Fetching user posts from:", response);
         if (!response.ok) {
           throw new Error("Failed to fetch user posts");
         }
         const postsData = await response.json();
         setUserPosts(postsData);
-        console.log('the posts data is ' + postsData);
       } catch (error) {
         console.error("Error fetching user posts:", error);
       }
     };
-
+  
     fetchUserPosts();
-  }, [userInfo.id]);
+  }, []);
 
   console.log(userInfo.id);
 
