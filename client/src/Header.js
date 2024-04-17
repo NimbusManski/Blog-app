@@ -26,7 +26,7 @@ export default function Header() {
         navigate("/login");
       }
     }
-  }, [setUserInfo, navigate]);
+  }, []);
 
   const username = userInfo?.username;
 
